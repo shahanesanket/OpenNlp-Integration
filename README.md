@@ -7,7 +7,7 @@ The opennlp-tools-1.*.jar is likely to be shipped with the fusion.jar. Hence, we
 
 The `opennlp_integration.scala` is the working example of the using openNLP inside of the spark-shell. We load the data from Solr as Spark DataFrame and define tokenizer and tagger functions to perform the POS-tagging on the text data in the rdd.
 
-**Some warnings: VERY IMPORTANT ALWAYS USE `File` function only to load the .bin files. Nothing else! 
+**Some warnings: VERY IMPORTANT ALWAYS USE `File` function to load the `.bin` files. Nothing else! 
  Do not use FileInputStream, FileReader, or getClass.getResource(), or getClass.getResourceAsStream(). You may run into TaskNotSerializable when applying these functions to RDDs.**
  
 Currently we are loading these files inside of the functions. If we do it outside we'll get serialization errors and it won't work with RDDs. This could potentially have some performance issues because, when we call map on the rdd we are calling the tokenize,tag functions which read the binary file. Looks like a lot of disk reads.
